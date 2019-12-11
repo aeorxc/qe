@@ -1,64 +1,53 @@
 from setuptools import setup
+from setuptools.command.install import install
 import os
-
-# Major and minor versions
-majorVersion = 1
-minorVersion = 1
+import sys
 
 
-# Get build number
-def __path(filename):
-    return os.path.join(os.path.dirname(__file__),
-                        filename)
+VERSION = "1.1.1"
 
+class VerifyVersionCommand(install):
+    """Custom command to verify that the git tag matches our version"""
+    description = 'verify that the git tag matches our version'
 
-build = 0
-if os.path.exists(__path('build.info')):
-    build = open(__path('build.info')).read().strip()
+    def run(self):
+        tag = os.getenv('CIRCLE_TAG')
 
-versionStr = '{0}.{1}.{2}'.format(majorVersion, minorVersion, build)
+        if tag != VERSION:
+            info = "Git tag: {0} does not match the version of this app: {1}".format(
+                tag, VERSION
+            )
+            sys.exit(info)
 
 setup(
-    name='qe',
-    version=versionStr,
-    packages=['qe'],
-    test_suite='tests',
-    url='',
-    license='MIT',
-    author='Gibran',
-    author_email='',
-    description='quick excel for pandas df to Excel in one command',
-    # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
+    name="qe",
+    version=VERSION,
+    description="quick excel for pandas df to Excel in one command",
+    long_description='',
+    url="https://github.com/aeorxc/qe",
+    author="John Doe",
+    author_email="example@example.org",
+    license="MIT",
     classifiers=[
-        # How mature is this project? Common values are
-        #   3 - Alpha
-        #   4 - Beta
-        #   5 - Production/Stable
-        'Development Status :: 4 - Beta',
-
-        # Indicate who your project is intended for
-        'Intended Audience :: Developers',
-        'Topic :: Software Development :: Build Tools',
-
-        # Pick your license as you wish (should match "license" above)
-        'License :: OSI Approved :: MIT License',
-
-        # Specify the Python versions you support here. In particular, ensure
-        # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2.7'
-        'Programming Language :: Python :: 3.5'
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Intended Audience :: System Administrators",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Build Tools",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Internet",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3 :: Only",
     ],
-
-    # List additional groups of dependencies here (e.g. development
-    # dependencies). You can install these using the following syntax,
-    # for example:
-    # $ pip install -e .[dev,test]
-    extras_require={
-        'dev': ['check-manifest'],
-        'test': ['coverage'],
-    },
-
-    install_requires=[],
-    setup_requires=['pytest-runner'],
-    tests_require=['pytest'],
+    keywords='pandas excel quick',
+    packages=['qe'],
+    install_requires=[
+        'pandas>=0.20.1',
+    ],
+    python_requires='>=3',
+    cmdclass={
+        'verify': VerifyVersionCommand,
+    }
 )
