@@ -49,6 +49,7 @@ jobs:
           command: |
             . venv/bin/activate
             python -m pytest
+            python setup.py verify
 
       - store_artifacts:
           path: test-reports
