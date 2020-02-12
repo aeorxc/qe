@@ -14,7 +14,7 @@ def qe(df, applyTable = True, name=None):
 
         index_name = df.index.name
         if index_name is None: index_name = ''
-        c = [{'header': index_name}] + [{'header': x} for x in df.columns]
+        c = [{'header': str(index_name)}] + [{'header': str(x)} for x in df.columns]
 
         worksheet.add_table(0, 0, len(df), len(df.columns), {'columns': c})
 
@@ -25,3 +25,7 @@ def qe(df, applyTable = True, name=None):
 
     os.close(fh)
     os.system(abs_path)
+
+
+if __name__ == '__main__':
+    pass
