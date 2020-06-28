@@ -7,6 +7,9 @@ from tempfile import mkstemp
 def qe(df, applyTable = True, name=None):
     fh, abs_path = mkstemp(suffix='.xlsx')
 
+    if isinstance(df, pd.Series):
+        df = pd.DataFrame(df)
+
     if applyTable:
         writer = pd.ExcelWriter(abs_path, engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Sheet1')

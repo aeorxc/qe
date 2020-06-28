@@ -1,8 +1,1 @@
 pandas>=0.20.1
-doc8
-coverage
-codecon
-twine
-sphinx
-sphinx-autobuild
-sphinx_rtd_theme

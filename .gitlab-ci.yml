@@ -1,0 +1,37 @@
+image: alpine:latest
+
+stages:
+  - build
+  - deploy
+  - review
+  - staging
+  - canary
+  - production
+  - performance
+  - incremental rollout 10%
+  - incremental rollout 25%
+  - incremental rollout 50%
+  - incremental rollout 100%
+  - cleanup
+
+include:
+  - template: Jobs/Build.gitlab-ci.yml
+  - template: Jobs/Code-Quality.gitlab-ci.yml
+  - template: Jobs/Deploy.gitlab-ci.yml
+  - template: Security/Container-Scanning.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/License-Management.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+
+deploy:
+  stage: deploy
+  image: "python:3.7"
+  variables:
+    TWINE_USERNAME: $PRODUCTION_USERNAME
+    TWINE_PASSWORD: $PRODUCTION_PASSWORD
+  script:
+    - pip install twine
+    - python setup.py sdist
+    - twine upload dist/*
+  only:
+    - tags
