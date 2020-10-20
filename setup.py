@@ -3,7 +3,7 @@ import os
 
 setuptools.setup(
     name="qe",
-    version="1.0.1",
+    version="1.0.2",
     author="aeorxc",
     author_email="author@example.com",
     description="turn pandas dataframe into an excel instance on Windows",
@@ -17,7 +17,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=['pandas'],
+    install_requires=['pandas', 'xlsxwriter'],
     python_requires='>=3.6',
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
