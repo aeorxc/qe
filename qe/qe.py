@@ -27,8 +27,10 @@ def qe(df, applyTable = True, name=None):
         df.to_excel(abs_path)
 
     os.close(fh)
-    os.system(abs_path)
+    os.system("start Excel " + abs_path)
 
 
 if __name__ == '__main__':
-    pass
+    d = {'col1': [1, 2], 'col2': [3, 4]}
+    df = pd.DataFrame(data=d)
+    qe(df)
