@@ -3,7 +3,7 @@ import os
 
 setuptools.setup(
     name="qe",
-    version="1.0.5",
+    version="2.0.0",
     author="aeorxc",
     author_email="author@example.com",
     description="turn pandas dataframe into an excel instance on Windows",
